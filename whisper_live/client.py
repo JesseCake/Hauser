@@ -290,6 +290,12 @@ class TranscriptionTeeClient:
         self.paused = False
         self.p = pyaudio.PyAudio()
         try:
+            # List available devices and choose the default one
+            print("[INFO]: Available audio devices:")
+            for i in range(self.p.get_device_count()):
+                dev_info = self.p.get_device_info_by_index(i)
+                print(f"Device {i}: {dev_info['name']}")
+
             self.stream = self.p.open(
                 format=self.format,
                 channels=self.channels,
